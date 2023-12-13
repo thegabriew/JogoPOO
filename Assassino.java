@@ -4,17 +4,17 @@ public class Assassino extends Personagem {
     }
 
     public void ameaçaSoturna(Personagem alvo) {
-        System.out.println("Assassino usou Ameaça Soturna em " + alvo.getNome());
+        System.out.println("Assassino usou Adaga: Ameaça Soturna em " + alvo.getNome());
         alvo.setVida(alvo.getVida() - 50);
     }
 
     public void degolador(Personagem alvo) {
-        System.out.println("Assassino usou Degolador em " + alvo.getNome());
+        System.out.println("Assassino usou Adaga: Degolador em " + alvo.getNome());
         alvo.setVida(alvo.getVida() - 100);
     }
 
     public void desmembrador(Personagem alvo) {
-        System.out.println("Assassino usou Desmembrador em " alvo.getNome());
+        System.out.println("Assassino usou Adaga: Desmembrador em " alvo.getNome());
         alvo.setVida(alvo.getVida() - 150);
     }
 
