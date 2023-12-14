@@ -1,29 +1,88 @@
-public class Espadachim extends Personagem {
-    public Espadachim(String armas, String poderes) {
-        super(armas, poderes);
+
+import java.util.Scanner;
+
+public class Jogo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Criando personagens
+        Personagem personagem1 = criarPersonagem("Personagem 1");
+        Personagem personagem2 = criarPersonagem("Personagem 2");
+
+        // Solicitando ao usuário escolher um personagem
+        System.out.println("Escolha o personagem:");
+        System.out.println("1. " + personagem1.getNome());
+        System.out.println("2. " + personagem2.getNome());
+
+        int escolha = scanner.nextInt();
+        Personagem jogador1, jogador2;
+
+        // Atribuindo personagens aos jogadores com base na escolha do usuário
+        if (escolha == 1) {
+            jogador1 = personagem1;
+            jogador2 = personagem2;
+        } else {
+            jogador1 = personagem2;
+            jogador2 = personagem1;
+        }
+
+        // Simulando rodadas de ataque
+        for (int rodada = 1; rodada <= 3; rodada++) {
+            System.out.println("\nRodada " + rodada + ":");
+
+            // Jogador 1 ataca Jogador 2
+            jogador1.Atacar(jogador2, criarAtaque());
+
+            if (jogador2.getVida() <= 0) {
+                System.out.println(jogador2.getNome() + " foi derrotado!");
+                break;
+            }
+
+            // Jogador 2 ataca Jogador 1
+            jogador2.Atacar(jogador1, criarAtaque());
+
+            if (jogador1.getVida() <= 0) {
+                System.out.println(jogador1.getNome() + " foi derrotado!");
+                break;
+            }
+        }
+
+        // Exibindo o estado final dos personagens
+        System.out.println("\nEstado final dos personagens:");
+        System.out.println(jogador1.getNome() + ": Vida - " + jogador1.getVida());
+        System.out.println(jogador2.getNome() + ": Vida - " + jogador2.getVida());
+
+        scanner.close();
     }
 
-    public void laminaSangrenta(Personagem alvo) {
-        System.out.println("Espadachim usou Katana: Lâmina Sangrenta em " + alvo.getNome());
-        alvo.setVida(alvo.getVida() - 50);
+    // Método para criar um personagem com base no nome fornecido
+    private static Personagem criarPersonagem(String nome) {
+        System.out.println("Criando " + nome + ":");
+        System.out.println("Escolha a arma para " + nome + ":");
+        System.out.println("1. Adaga");
+        System.out.println("2. Katana, Shuriken");
+
+        Scanner scanner = new Scanner(System.in);
+        int escolhaArma = scanner.nextInt();
+
+        String armas, poderes;
+
+        // Atribuir armas e poderes com base na escolha
+        if (escolhaArma == 1) {
+            armas = "Adaga";
+            poderes = "Ameaça Soturna, Degolador, Desmembrador";
+        } else {
+            armas = "Katana, Shuriken";
+            poderes = "Katana: Lâmina Sangrenta, Corte Duplo; Shuriken: Lâminas Voadoras";
+        }
+
+        return nome.equals("Personagem 1") ? new Assassino(armas, poderes) : new Espadachim(armas, poderes);
     }
 
-    public void corteDuplo(Personagem alvo) {
-        System.out.println("Espadachim usou Katana: Corte Duplo em " + alvo.getNome());
-        alvo.setVida(alvo.getVida() - 100);
-    }
-
-    public void laminasVoadoras(Personagem alvo) {
-        System.out.println("Espadachim usou Shuriken: Lâminas Voadoras em " + alvo.getNome());
-        alvo.setVida(alvo.getVida() - 150);
-    }
-
-    public void descricao() {
-        System.out.println("\nDescrição do Personagem\n");
-        System.out.println("Nome: Espadachim");
-        System.out.println("Vida: 500");
-        System.out.println("Arma: Katana, Shuriken");
-        System.out.println("Poderes: Katana: Lâmina Sangrenta, Corte Duplo; Shuriken: Lâminas Voadoras");
-        System.out.println("Descrição: Ágeis e letais, Espadachins dançam no campo de batalha como uma tempestade de aço. Suas lâminas cortam o ar com precisão mortal, e cada movimento é executado de forma fria e calculada.");
+    // Método para criar um ataque simples
+    private static Ataque criarAtaque() {
+        // Aqui você pode adicionar lógica para permitir ao usuário escolher um tipo de ataque ou criar ataque customizado
+        return new Ataque(50); // Por enquanto, todos os ataques causam 50 de dano
     }
 }
